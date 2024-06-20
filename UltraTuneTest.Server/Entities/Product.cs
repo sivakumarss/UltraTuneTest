@@ -1,5 +1,6 @@
 ﻿namespace UltraTuneTest.Server.Entities;
 
+//Question 1 Implementation
 public class Product
 {
     public Guid Id { get; set; }
@@ -14,3 +15,4 @@ public class Product
     #endregion
 
 }
+

@@ -2,7 +2,7 @@
 
 
 namespace UltraTuneTest.Server.Infrastructure;
-
+//Question 3 Implementation 
 public class DuplicateProductException : Exception
 {
     public DuplicateProductException()

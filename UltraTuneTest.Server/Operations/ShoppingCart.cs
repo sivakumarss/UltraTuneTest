@@ -1,4 +1,5 @@
-﻿using UltraTuneTest.Server.Abstractions;
+﻿using System.Text.Json;
+using UltraTuneTest.Server.Abstractions;
 using UltraTuneTest.Server.Entities;
 using UltraTuneTest.Server.Infrastructure;
 
@@ -6,6 +7,8 @@ namespace UltraTuneTest.Server.Operations;
 
 public class ShoppingCart : IShoppingCart
 {
+
+    //Question 2 Implementation  -- Start
 
     public Product CreateProduct()
     {
@@ -30,7 +33,7 @@ public class ShoppingCart : IShoppingCart
             }
             else
             {
-                throw new DuplicateProductException();
+                throw new DuplicateProductException(); //Question 3 Implementation 
             }
 
         }
@@ -58,16 +61,11 @@ public class ShoppingCart : IShoppingCart
         return GenerateDummyProductList();
     }
 
-    public List<Product> GetProductsByName(string name)
-    {
-        return GetProducts().Where(p => p.Name == name).ToList();
-    }
+    //Question 2 Implementation  -- End
 
-    public List<Product> GetProductsByPriceRange(decimal minPrice, decimal maxPrice)
-    {
-        return GetProducts().Where(p => p.Price > minPrice && p.Price < maxPrice).ToList();
-    }
+    //----------------------------------------------------------------------------
 
+    //Question 4 Implementation 
     public decimal GetTotalPrice()
     {
         var totalPrice = 0.0M;
@@ -75,11 +73,40 @@ public class ShoppingCart : IShoppingCart
 
         products.ForEach(product =>
         {
-            totalPrice+= product.Price;
+            totalPrice += product.Price;
         });
 
 
         return totalPrice;
+    }
+
+
+    public List<Product> GetProductsByName(string name)
+    {
+        return GetProducts().Where(p => p.Name == name).ToList();
+    }
+    //Question 6 Implementation these two methods above and below
+    public List<Product> GetProductsByPriceRange(decimal minPrice, decimal maxPrice)
+    {
+        return GetProducts().Where(p => p.Price > minPrice && p.Price < maxPrice).ToList();
+    }
+
+
+
+    public async Task SaveProductsToFileAsync()
+    {
+        var products = GetProducts();
+
+        await using FileStream createStream = File.Create(Constant.FileName);
+        await JsonSerializer.SerializeAsync(createStream, products);
+
+    }
+    //Question 8 Implementation these two methods above and below
+    public async Task LoadProductsFromFileAsync()
+    {
+        List<Product> products = new();
+        using FileStream openStream = File.OpenRead(Constant.FileName);
+        products = await JsonSerializer.DeserializeAsync<List<Product>>(openStream);
     }
 
 

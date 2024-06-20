@@ -4,5 +4,6 @@ public class Constant
 {
     public const string DiscountPercentage = "DiscountPercentage";
     public const string ThresholdPrice = "ThresholdPrice";
+    public const string FileName = "FileName";
 
 }

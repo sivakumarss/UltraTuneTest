@@ -12,4 +12,7 @@ public interface IShoppingCart
     List<Product> GetProductsByName(string name);
     List<Product> GetProductsByPriceRange(decimal minPrice , decimal maxPrice);
 
+    Task SaveProductsToFileAsync();
+    Task LoadProductsFromFileAsync();
+
 }

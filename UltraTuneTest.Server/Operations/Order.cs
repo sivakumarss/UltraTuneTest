@@ -4,8 +4,8 @@ using UltraTuneTest.Server.Entities;
 using UltraTuneTest.Server.Infrastructure;
 
 namespace UltraTuneTest.Server.Operations;
-
-public class Order
+//Question 7 Implementation
+public class Order : IOrder
 {
     public IShoppingCart _cart;
 
@@ -35,7 +35,7 @@ public class Order
     public decimal CalculateTotalPrice()
     {
         var totalPrice = 0.0M;
-        
+
         totalPrice += CreateOrder("Car Wash").Price;
         totalPrice += CreateOrder("Car Mat").Price;
         totalPrice += CreateOrder("Engine oil").Price;
@@ -46,7 +46,6 @@ public class Order
 
 
 
-    #region Public methods
     public void DisplayOrderDetails()
     {
         ProductOrders.ForEach(o =>
@@ -55,5 +54,4 @@ public class Order
         });
         Console.WriteLine($"Total Price: {CalculateTotalPrice}");
     }
-    #endregion
 }
